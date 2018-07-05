@@ -1,0 +1,224 @@
+set nocompatible
+filetype off
+
+set shell=/bin/bash
+
+" //=============================\\
+" || Vundle VIM Plugins Manifest ||
+" \\=============================//
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" Manage Vundle with Vundle!
+Plugin 'gmarik/Vundle.vim'
+
+" /---------------------\
+" | Colorscheme Plugins |
+" \---------------------/
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'vim-airline/vim-airline-themes'
+
+" /--------------\
+" | File Plugins |
+" \--------------/
+Plugin 'epmatsw/ag.vim'
+Plugin 'scrooloose/nerdtree'
+
+" /------------\
+" | UI Plugins |
+" \------------/
+" Use airline for a fancy VIM UI
+Plugin 'vim-airline/vim-airline'
+" Export the VIM UI to ZSH with promptline
+Plugin 'edkolev/promptline.vim'
+" Export the VIM UI to tmux with tmuxline
+Plugin 'edkolev/tmuxline.vim'
+Plugin 'bling/vim-bufferline'
+
+" /-----------------\
+" | Utility Plugins |
+" \-----------------/
+Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'xolox/vim-shell'
+Plugin 'xolox/vim-notes'
+Plugin 'vimwiki/vimwiki'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'godlygeek/tabular'
+
+" /------------------\
+" | HTML/CSS Plugins |
+" \------------------/
+Plugin 'ap/vim-css-color'
+
+" /--------------------\
+" | PostgreSQL Plugins |
+" \--------------------/
+Plugin 'exu/pgsql.vim'
+
+" /-------------\
+" | Git Plugins |
+" \-------------/
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+
+" /------------------\
+" | Markdown Plugins |
+" \------------------/
+Plugin 'plasticboy/vim-markdown'
+
+" /-------------\
+" | VIM Plugins |
+" \-------------/
+Plugin 'xolox/vim-misc'
+Plugin 'ervandew/supertab'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-abolish'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'Keithbsmiley/tmux.vim'
+
+call vundle#end()
+filetype plugin indent on
+
+" /------------------\
+" | Powerline Plugin |
+" \------------------/
+if has("python3")
+  python3 from powerline.vim import setup as powerline_setup
+  python3 powerline_setup()
+  python3 del powerline_setup
+endif
+
+" //=================\\
+" || Plugin Settings ||
+" \\=================//
+
+" /--------------------\
+" | Ag Plugin Settings |
+" \--------------------/
+" Use smart case when searching
+let g:ag_prg="/usr/bin/env ag --vimgrep --smart-case"
+" Highlight search term in results
+let g:ag_highlight=1
+
+" /--------------------------\
+" | NERDTree Plugin Settings |
+" \--------------------------/
+" Map Ctrl-t to toggle the NERDTree
+map <C-t> :NERDTreeToggle<CR>
+
+" /---------------------------\
+" | Syntastic Plugin Settings |
+" \---------------------------/
+let g:syntastic_aggregate_errors=1
+
+let g:syntastic_echo_current_error=1
+let g:syntastic_enable_balloons=1
+
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_auto_loc_list=1
+let g:syntastic_check_on_open=1
+let g:syntastic_check_on_wq=0
+
+" /--------------------------\
+" | EasyTags Plugin Settings |
+" \--------------------------/
+let g:easytags_dynamic_files=1
+" Use the less accurate but more performant syntax highlighting.
+let g:easytags_syntax_keyword='always'
+" Run EasyTags asynchronously
+let g:easytags_async=1
+
+" /--------------------------\
+" | Tmuxline Plugin Settings |
+" \--------------------------/
+" Use the 'tmux' preset setting
+let g:tmuxline_preset='tmux'
+
+" /--------------------------------------\
+" | VIM-Multiple-Cursors Plugin Settings |
+" \--------------------------------------/
+" Don't use default mappings
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_start_key='<C-n>'
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+
+" /-------------\
+" | UI Settings |
+" \-------------/
+" Use powerline fonts with airline
+let g:airline_theme='solarized'
+let g:airline_powerline_fonts=1
+" Set the promptline theme to 'airline'
+let g:promptline_theme='airline'
+
+" /--------------\
+" | Vim Settings |
+" \--------------/
+" Always show the statusbar
+set laststatus=2
+
+" Enable syntax highlighting
+syntax enable
+
+" Show line numbers
+set number
+
+" expand tabs
+set shiftwidth=2 softtabstop=2 tabstop=2 expandtab
+
+" Don't wrap lines
+set wrap
+
+set autoindent
+set complete-=i
+set smarttab
+set nrformats-=octal
+set incsearch
+if maparg('<C-L>', 'n') ==# ''
+  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+endif
+
+set ruler
+set wildmenu
+if !&scrolloff
+  set scrolloff=1
+endif
+if !&sidescrolloff=5
+end
+set display+=lastline
+
+if &listchars ==# 'eol:$'
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+endif
+
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j
+endif
+
+if has('path_extra')
+  setglobal tags-=./tags tags -=./tags; tags^=./tags
+endif
+
+set autoread
+
+if &history < 1000
+  set history=1000
+endif
+if &tabpagemax < 50
+  set tabpagemax=50
+endif
+set sessionoptions-=options
+
+" Make backspace work in all modes
+set backspace=indent,eol,start
+
+" Use Solarized-dark for colorscheme
+set t_ut=
+set t_Co=256
+set background=dark
+colorscheme solarized
