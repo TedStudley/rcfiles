@@ -45,6 +45,8 @@ Plugin 'xolox/vim-notes'
 Plugin 'vimwiki/vimwiki'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'godlygeek/tabular'
+Plugin 'junegunn/fzf', { 'do': './install --all' }
+Plugin 'w0rp/ale'
 
 " /------------------\
 " | HTML/CSS Plugins |
@@ -55,6 +57,7 @@ Plugin 'ap/vim-css-color'
 " | PostgreSQL Plugins |
 " \--------------------/
 Plugin 'exu/pgsql.vim'
+Plugin 'vim-scripts/dbext.vim'
 
 " /-------------\
 " | Git Plugins |
@@ -188,7 +191,8 @@ set wildmenu
 if !&scrolloff
   set scrolloff=1
 endif
-if !&sidescrolloff=5
+if !&sidescrolloff
+  set sidescrolloff=5
 end
 set display+=lastline
 
